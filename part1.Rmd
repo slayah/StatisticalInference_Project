@@ -1,0 +1,88 @@
+---
+title: "Statistical Inference Course Project Part 1"
+author: "Smriti Gambhir"
+date: "February 28, 2016"
+output: html_document
+---
+
+**Show the sample mean and compare it to the theoretical mean of the distribution**
+
+Initial declarations
+```{r}
+library(ggplot2)
+lambda=0.2
+n=40
+theoretical_mean=1/lambda
+theoretical_sd=(1/lambda)/sqrt(n)
+nsim=1000
+set.seed(820)
+```
+
+Calculating means of 1000 independant simulations of exponential data of size 40
+
+```{r}
+exp_means=NULL
+for(i in 1:nsim) exp_means=c(exp_means,mean(rexp(n,lambda)))
+```
+
+Plotting these means and showing where the mean of these simulations lies
+
+```{r}
+hist(exp_means,col = "blue",breaks=20)
+actual_mean<-mean(exp_means)
+abline(v=actual_mean, col="red")
+```
+
+Theoretical mean of this data = 1/lambda
+
+```{r}
+print(theoretical_mean)
+```
+
+**Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution**
+
+Calculation of standard deviation of the means for this data
+
+```{r}
+sample_sd<-sd(exp_means)
+print(sample_sd)
+```
+
+Variance of exponential means
+
+```{r}
+sample_variance<-sample_sd^2
+print(sample_variance)
+```
+
+Theoretical variance calculation = ((1/lambda)*(1/sqrt(n)))^2
+
+```{r}
+print(theoretical_sd)
+```
+
+```{r}
+theoretical_variance<-theoretical_sd^2
+print(theoretical_variance)
+```
+
+**Show that the distribution is approximately normal** 
+
+
+```{r}
+hist(exp_means, prob=TRUE, col="green", main="mean distribution for rexp()", breaks=20)
+lines(density(exp_means), lwd=3, col="blue")
+```
+
+Coverage for confidence interval of 1/lambda
+```{r}
+l<-seq(4,6, by=0.01)
+coverage <- function(l){
+  means<-rowMeans(matrix(rexp(n*nsim, rate = 0.2),nsim,n))
+  ll<-means - qnorm(0.975)*sqrt(1/lambda**2/n)
+  ul<-means + qnorm(0.975)*sqrt(1/lambda**2/n)
+  mean(ll<l & ul>l)
+}
+l_coverages<-sapply(l,coverage)
+qplot(l, l_coverages) + geom_hline(yintercept=0.95)
+```

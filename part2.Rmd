@@ -1,0 +1,65 @@
+---
+title: "Statistical Inference Course Project Part 2"
+author: "Smriti Gambhir"
+date: "February 28, 2016"
+output: html_document
+---
+
+**1. Load the ToothGrowth data and perform some basic exploratory data analyses.**
+
+```{r}
+data("ToothGrowth")
+str(ToothGrowth)
+```
+
+```{r}
+head(ToothGrowth)
+```
+
+```{r}
+summary(ToothGrowth)
+```
+
+dose versus len plot
+```{r}
+plot(dose~len,data = ToothGrowth,pch=19)
+```
+
+supp versus len plot
+```{r}
+plot(as.numeric(supp)~len,data = ToothGrowth,pch=19)
+```
+
+Boxplot of len based on supp
+```{r}
+boxplot(len~supp,data = ToothGrowth,col="red")
+```
+
+Boxplot of len based on dose 
+```{r}
+boxplot(len~dose,data = ToothGrowth,col="green")
+```
+
+Histogram of len
+```{r}
+hist(as.numeric(ToothGrowth$len),col = "blue",breaks=15)
+```
+
+**2.Perform some relevant confidence intervals and/or tests**
+
+```{r}
+t.test(len ~ supp, ToothGrowth[ToothGrowth$dose == .5, ])
+```
+
+```{r}
+t.test(len ~ supp, ToothGrowth[ToothGrowth$dose == 1, ])
+```
+
+```{r}
+t.test(len ~ supp, ToothGrowth[ToothGrowth$dose == 2, ])
+```
+
+**Conclusions**
+
+Lower p-value for dose=0.5 and dose=1 indicates significant difference in means as can be seen [13.23-7.98=5.25 and 22.70-16.77=5.93]
+Whereas higher p-value for dose=2 indicates a very small or insignificant difference in mean.
