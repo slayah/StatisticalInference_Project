@@ -1,8 +1,11 @@
 ---
-title: "Statistical Inference Course Project Part 2"
+title: "Statistical Inference Project Part 2"
 author: "Smriti Gambhir"
 date: "February 28, 2016"
-output: html_document
+output:
+  html_document: default
+  pdf_document:
+    latex_engine: miktex
 ---
 
 **1. Load the ToothGrowth data and perform some basic exploratory data analyses.**
@@ -13,36 +16,20 @@ str(ToothGrowth)
 ```
 
 ```{r}
-head(ToothGrowth)
-```
-
-```{r}
 summary(ToothGrowth)
 ```
 
-dose versus len plot
+dose versus len and supp versus len plots
 ```{r}
+par(mfrow=c(1,2))
 plot(dose~len,data = ToothGrowth,pch=19)
-```
-
-supp versus len plot
-```{r}
 plot(as.numeric(supp)~len,data = ToothGrowth,pch=19)
 ```
 
-Boxplot of len based on supp
 ```{r}
+par(mfrow=c(1,2))
 boxplot(len~supp,data = ToothGrowth,col="red")
-```
-
-Boxplot of len based on dose 
-```{r}
 boxplot(len~dose,data = ToothGrowth,col="green")
-```
-
-Histogram of len
-```{r}
-hist(as.numeric(ToothGrowth$len),col = "blue",breaks=15)
 ```
 
 **2.Perform some relevant confidence intervals and/or tests**

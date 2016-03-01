@@ -1,8 +1,9 @@
 ---
-title: "Statistical Inference Course Project Part 1"
+title: "Statistical Inference Project Part 1"
 author: "Smriti Gambhir"
 date: "February 28, 2016"
 output: html_document
+
 ---
 
 **Show the sample mean and compare it to the theoretical mean of the distribution**
@@ -24,6 +25,8 @@ Calculating means of 1000 independant simulations of exponential data of size 40
 exp_means=NULL
 for(i in 1:nsim) exp_means=c(exp_means,mean(rexp(n,lambda)))
 ```
+
+
 
 Plotting these means and showing where the mean of these simulations lies
 
@@ -75,7 +78,7 @@ lines(density(exp_means), lwd=3, col="blue")
 ```
 
 Coverage for confidence interval of 1/lambda
-```{r}
+```{r,echo=FALSE}
 l<-seq(4,6, by=0.01)
 coverage <- function(l){
   means<-rowMeans(matrix(rexp(n*nsim, rate = 0.2),nsim,n))
